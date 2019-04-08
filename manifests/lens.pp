@@ -58,7 +58,9 @@ define augeas::lens (
     mode => '0644',
   }
 
-  if (!$stock_since or versioncmp($::facts['augeasversion'], $stock_since) < 0) {
+  include stdlib
+  $metadata = load_module_metadata('augeas')
+  if (!$stock_since or versioncmp($metadata['version'], $stock_since) < 0) {
 
     assert_type(Pattern[/^\/.*/], $augeas::lens_dir)
 
